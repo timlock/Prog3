@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.Iterator;
 
 import de.hsos.prog3.audio.SimpleAudioPlayer;
-import de.hsos.prog3.ab1.audio.audio.adapter.SimpleAudioPlayerAdapter;
+import de.hsos.prog3.ab1.audio.adapter.SimpleAudioPlayerAdapter;
 
 
 public class App {

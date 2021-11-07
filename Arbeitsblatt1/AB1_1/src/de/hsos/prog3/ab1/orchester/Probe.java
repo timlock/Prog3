@@ -1,7 +1,7 @@
 package de.hsos.prog3.ab1.orchester;
 
-import de.hsos.prog3.ab1.audio.audio.StdAudioPlayer;
-import de.hsos.prog3.ab1.audio.audio.adapter.SimpleAudioPlayerAdapter;
+import de.hsos.prog3.ab1.audio.StdAudioPlayer;
+import de.hsos.prog3.ab1.audio.adapter.SimpleAudioPlayerAdapter;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

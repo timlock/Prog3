@@ -1,4 +1,4 @@
-package de.hsos.prog3.ab1.audio.audio;
+package de.hsos.prog3.ab1.audio;
 
 import java.io.IOException;
 import java.net.URL;

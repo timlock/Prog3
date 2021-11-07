@@ -1,6 +1,6 @@
-package de.hsos.prog3.ab1.audio.audio.adapter;
+package de.hsos.prog3.ab1.audio.adapter;
 
-import de.hsos.prog3.ab1.audio.audio.StdAudioPlayer;
+import de.hsos.prog3.ab1.audio.StdAudioPlayer;
 import de.hsos.prog3.audio.SimpleAudioPlayer;
 
 import java.io.IOException;
