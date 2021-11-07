@@ -20,18 +20,21 @@ public class Orchester {
     public Orchester(String bezeichnung, String audioDateiKonzert){
         this.bezeichnung = bezeichnung;
         this.audioDateiKonzert = audioDateiKonzert;
-        musikerInnen = new HashSet<MusikerIn>();
+        musikerInnen = new HashSet<>();
     }
     public void addDirigentIn(DirigentIn dirigentIn) {
         this.dirigentIn = dirigentIn;
     }
     public void addMusikerIn(MusikerIn musikerIn){
+        if(musikerInnen == null){
+            musikerInnen = new HashSet<>();
+        }
         musikerInnen.add(musikerIn);
     }
     public HashSet<MusikerIn> getMusikerinnen() {
         return musikerInnen;
     }
-    public void proben() throws IOException {
+    public void proben()  {
         verhalten = new Probe();
         verhalten.spielen(this);
     }
@@ -46,6 +49,18 @@ public class Orchester {
     public URL getAudioDateiKonzert() throws MalformedURLException {
         return App.class.getResource(audioDateiKonzert);
     }
+    /*
+        Pro:
+            -auf die innere Klasse kann von Außen nicht zugegriffen werde
+            -innere Klasse Klasse muss nicht zusätzlich importiert werden
+            -es müssen keine Objektvariablen an die innere Klasse weitergegeben werden
+        Contra:
+            -die innere Klasse kann nicht direkt von Außerhalb verwendet werden
+            bsp. müsste eine andere Klasse eine eigene Probeklasse haben
+            -über die innere Klasse kann von außerhalb auf die privaten Objektvariabeln zugegriffen werden
+            diese müssten auch abgesichert werden
+
+     */
 
     private class Probe implements Verhalten{
 
