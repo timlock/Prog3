@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Iterator;
 
+import de.hsos.prog3.ab1.audio.StdAudioPlayer;
 import de.hsos.prog3.audio.SimpleAudioPlayer;
 import de.hsos.prog3.ab1.audio.adapter.SimpleAudioPlayerAdapter;
 
@@ -13,9 +14,9 @@ import de.hsos.prog3.ab1.audio.adapter.SimpleAudioPlayerAdapter;
 public class App {
 
     public static void main(String[] args) throws IOException {
-//        aufgabe1_1();
-//        aufgabe1_2();
-//        aufgabe1_3();
+        aufgabe1_1();
+        aufgabe1_2();
+        aufgabe1_3();
         aufgabe1_4();
     }
 
@@ -44,7 +45,7 @@ public class App {
     }
     public static void aufgabe1_3()throws IOException {
         URL url = App.class.getResource("/Drum.wav");
-        SimpleAudioPlayerAdapter player = new SimpleAudioPlayerAdapter();
+        StdAudioPlayer player = new SimpleAudioPlayerAdapter();
         player.einmaligAbspielen(url);
 
     }

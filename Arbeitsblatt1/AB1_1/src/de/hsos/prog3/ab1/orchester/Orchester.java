@@ -58,8 +58,7 @@ public class Orchester {
         Contra:
             -die innere Klasse kann nicht direkt von Außerhalb verwendet werden
             bsp. müsste eine andere Klasse eine eigene Implementierung von Probe haben
-            -über die innere Klasse kann von außerhalb auf die privaten Objektvariabeln zugegriffen werden
-            diese müssten auch abgesichert werden
+
 
      */
 
