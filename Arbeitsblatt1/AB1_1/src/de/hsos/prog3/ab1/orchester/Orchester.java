@@ -54,9 +54,10 @@ public class Orchester {
             -auf die innere Klasse kann von Außen nicht zugegriffen werde
             -innere Klasse Klasse muss nicht zusätzlich importiert werden
             -es müssen keine Objektvariablen an die innere Klasse weitergegeben werden
+            -Probe und Konzert können genau auf Orchester zugeschnitten werden
         Contra:
             -die innere Klasse kann nicht direkt von Außerhalb verwendet werden
-            bsp. müsste eine andere Klasse eine eigene Probeklasse haben
+            bsp. müsste eine andere Klasse eine eigene Implementierung von Probe haben
             -über die innere Klasse kann von außerhalb auf die privaten Objektvariabeln zugegriffen werden
             diese müssten auch abgesichert werden
 
@@ -66,7 +67,7 @@ public class Orchester {
 
         @Override
         public void spielen(Orchester orchester) {
-            HashSet musikerInnen = orchester.getMusikerinnen();
+            HashSet musikerInnen = getMusikerinnen();
             Iterator<MusikerIn> hashIterator = musikerInnen.iterator();
             StdAudioPlayer player= new SimpleAudioPlayerAdapter();
             try {
