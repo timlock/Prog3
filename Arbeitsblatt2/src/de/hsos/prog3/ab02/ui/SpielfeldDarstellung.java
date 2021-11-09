@@ -8,7 +8,7 @@ public class SpielfeldDarstellung {
         this.ib = ib;
     }
 
-    public void spielfeldDarstellen(Boolean[][] spielfeld){
+    public void spielfeldDarstellen(boolean[][] spielfeld){
         int laengeDarstellung = 100;
         int margin = 10;
         int quadratBreite = laengeDarstellung / spielfeld.length;
@@ -24,6 +24,6 @@ public class SpielfeldDarstellung {
 
     }
     public void abwischen(){
-
+        ib.abwischen();
     }
 }

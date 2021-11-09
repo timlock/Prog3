@@ -25,9 +25,9 @@ public class NutzerEingabe {
         int wahrscheinlichkeit;
         do {
 
-            System.out.print("Bitte Wahrscheinlichkeitswert zwischen 1 und 100 eingeben\nWahrscheinlichkeit:");
+            System.out.print("Wahscheinlickeit einer Besiedlung \n(0-100):");
             wahrscheinlichkeit = eingabe.nextInt();
-        }while (wahrscheinlichkeit < 0 || wahrscheinlichkeit > 100);
+        }while (wahrscheinlichkeit <= 0 || wahrscheinlichkeit >= 100);
         return wahrscheinlichkeit;
     }
     public int anzahlDerSimulationsschritte(){
@@ -35,9 +35,9 @@ public class NutzerEingabe {
         int simulationsSchritte;
         do {
 
-            System.out.print("Bitte Anzahl der Simulationsschritte eingeben (zwischen 1 und 100)\nSimulationsschritte:");
+            System.out.print("Anzahl durchzufuehrender Simulationsschritte \n(Abbruch bei negativer Zahl:");
             simulationsSchritte = eingabe.nextInt();
-        }while (simulationsSchritte < 0 || simulationsSchritte > 100);
+        }while (simulationsSchritte > 10);
         return simulationsSchritte;
     }
 }
