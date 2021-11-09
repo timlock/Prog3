@@ -7,7 +7,20 @@ public class SpielfeldDarstellung {
     SpielfeldDarstellung(Interaktionsbrett ib){
         this.ib = ib;
     }
+
     public void spielfeldDarstellen(Boolean[][] spielfeld){
+        int laengeDarstellung = 100;
+        int margin = 10;
+        int quadratBreite = laengeDarstellung / spielfeld.length;
+        Quadrat quadrat;
+        for (int x = 0; x < spielfeld.length; x++) {
+            for (int y = 0; y < spielfeld[x].length; y++) {
+                quadrat = new Quadrat(margin + x * quadratBreite, margin + y * quadratBreite, quadratBreite);
+                quadrat.darstellenRahmen(ib);
+                quadrat.darstellenFuellung(ib);
+            }
+
+        }
 
     }
     public void abwischen(){
