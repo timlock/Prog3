@@ -11,25 +11,25 @@ public class Steuerung implements BeiAenderung {
     Simulation simulator;
     SpielfeldDarstellung spielFeldDarstellung;
 
-    Steuerung(){
-
-    }
 
     public void startDesSpiels(){
         initialisierung();
         int anzahlZellen = nutzerEingabe.anzahlZeilenDesSpielfelds();
-        int wahrscheinlichkeit= nutzerEingabe.wahrscheinlichkeitDerBesiedlung();
+        int wahrscheinlichkeit = nutzerEingabe.wahrscheinlichkeitDerBesiedlung();
         simulator.berechneAnfangsGeneration(anzahlZellen, wahrscheinlichkeit);
         int simulationsschritte = nutzerEingabe.anzahlDerSimulationsschritte();
-        if(simulationsschritte < 1) return;
+        if(simulationsschritte < 0) return;
+        simulator.berechneAnfangsGeneration(anzahlZellen, wahrscheinlichkeit);
         simulator.berechneFolgeGeneration(simulationsschritte);
 
     }
     public void initialisierung(){
         Interaktionsbrett interaktionsbrett = new Interaktionsbrett();
-        SpielfeldDarstellung spielFeldDarstellung = new SpielfeldDarstellung(interaktionsbrett);
+        spielFeldDarstellung = new SpielfeldDarstellung(interaktionsbrett);
         EinUndAusgabe einUndAusgabe = new EinUndAusgabe();
-        NutzerEingabe nutzerEingabe = new NutzerEingabe(einUndAusgabe);
+        nutzerEingabe = new NutzerEingabe(einUndAusgabe);
+        simulator = new Simulator();
+        simulator.anmeldenFuerAktualisierungBeiAenderung(this);
         simulator.anmeldenFuerAktualisierungBeiAenderung(this);
     }
 
