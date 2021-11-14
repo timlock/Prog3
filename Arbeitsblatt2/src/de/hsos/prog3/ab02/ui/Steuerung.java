@@ -7,21 +7,20 @@ import de.hsos.prog3.ab02.util.EinUndAusgabe;
 import de.hsos.prog3.ab02.util.Interaktionsbrett;
 
 public class Steuerung implements BeiAenderung {
-    NutzerEingabe nutzerEingabe;
-    Simulation simulator;
-    SpielfeldDarstellung spielFeldDarstellung;
+    private NutzerEingabe nutzerEingabe;
+    private Simulation simulator;
+    private SpielfeldDarstellung spielFeldDarstellung;
 
 
-    public void startDesSpiels(){
-        initialisierung();
+    public void startDesSpiels() throws InterruptedException {
         int anzahlZellen = nutzerEingabe.anzahlZeilenDesSpielfelds();
         int wahrscheinlichkeit = nutzerEingabe.wahrscheinlichkeitDerBesiedlung();
         simulator.berechneAnfangsGeneration(anzahlZellen, wahrscheinlichkeit);
         int simulationsschritte = nutzerEingabe.anzahlDerSimulationsschritte();
-        if(simulationsschritte < 0) return;
-        simulator.berechneAnfangsGeneration(anzahlZellen, wahrscheinlichkeit);
-        simulator.berechneFolgeGeneration(simulationsschritte);
-
+        do {
+            simulator.berechneFolgeGeneration(simulationsschritte);
+            simulationsschritte = nutzerEingabe.anzahlDerSimulationsschritte();
+        }while (simulationsschritte > 0);
     }
     public void initialisierung(){
         Interaktionsbrett interaktionsbrett = new Interaktionsbrett();
@@ -30,11 +29,19 @@ public class Steuerung implements BeiAenderung {
         nutzerEingabe = new NutzerEingabe(einUndAusgabe);
         simulator = new Simulator();
         simulator.anmeldenFuerAktualisierungBeiAenderung(this);
-        simulator.anmeldenFuerAktualisierungBeiAenderung(this);
+    }
+
+    public Simulation getSimulator() {
+        return simulator;
+    }
+
+    public void setSimulator(Simulation simulator) {
+        this.simulator = simulator;
     }
 
     @Override
     public void aktualisiere(boolean[][] neu) {
+        spielFeldDarstellung.abwischen();
         spielFeldDarstellung.spielfeldDarstellen(neu);
     }
 }

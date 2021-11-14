@@ -4,12 +4,12 @@ import de.hsos.prog3.ab02.util.Interaktionsbrett;
 
 public class SpielfeldDarstellung {
     private Interaktionsbrett ib;
-    SpielfeldDarstellung(Interaktionsbrett ib){
+    public SpielfeldDarstellung(Interaktionsbrett ib){
         this.ib = ib;
     }
 
     public void spielfeldDarstellen(boolean[][] spielfeld){
-        int laengeDarstellung = 100;
+        int laengeDarstellung = 300;
         int margin = 10;
         int quadratBreite = laengeDarstellung / spielfeld.length;
         Quadrat quadrat;
@@ -17,7 +17,7 @@ public class SpielfeldDarstellung {
             for (int y = 0; y < spielfeld[x].length; y++) {
                 quadrat = new Quadrat(margin + x * quadratBreite, margin + y * quadratBreite, quadratBreite);
                 quadrat.darstellenRahmen(ib);
-                quadrat.darstellenFuellung(ib);
+                if(spielfeld[x][y]) quadrat.darstellenFuellung(ib);
             }
 
         }
