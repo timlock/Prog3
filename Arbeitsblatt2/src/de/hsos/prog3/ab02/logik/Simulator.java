@@ -1,8 +1,5 @@
 package de.hsos.prog3.ab02.logik;
-
-import java.util.Arrays;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Simulator implements Simulation {
     private boolean[][] spielfeld;
@@ -55,27 +52,29 @@ public class Simulator implements Simulation {
         boolean wiederholung = false;
         int anzahlNachbar;
         for (int i = 0; i < berechnungsschritte; i++) {
-            Thread.sleep(2000);
+            Thread.sleep(200);
             for (int x = 0; x < anzahlDerZellen; x++) {
                 for (int y = 0; y < anzahlDerZellen; y++) {
                     anzahlNachbar = nachbarn(x, y);
-                    spielfeldNeu[x][y] = false;
-                    if(anzahlNachbar == 2 || anzahlNachbar == 3){
+                    if (spielfeld[x][y] && (anzahlNachbar < 2 || anzahlNachbar > 3)) {
+                        spielfeldNeu[x][y] = false;
+                    } else if (!spielfeld[x][y] && anzahlNachbar == 3) {
+                        spielfeldNeu[x][y] = true;
+                    } else if (spielfeld[x][y] && (anzahlNachbar == 2 || anzahlNachbar == 3)) {
+                        spielfeldNeu[x][y] = true;
+                    }
+                    /*spielfeldNeu[x][y] = false;
+                    if(spielfeld[x][y] && (anzahlNachbar < 2 || anzahlNachbar > 3)) spielfeldNeu[x][y] = false;
+                    else if(anzahlNachbar == 2 || anzahlNachbar == 3){
 //                        1. jede bewohnte Zelle mit genau zwei oder genau drei bewohnten Nachbarn bleibt bewohnt, sonst wird sie unbewohnt
                         if(spielfeld[x][y]) spielfeldNeu[x][y] = true;
 //                        2. jede unbewohnte Zelle mit genau drei bewohnten Nachbarn wird bewohnt, bleibt sonst unbewohnt
                         else if(!spielfeld[x][y] && anzahlNachbar == 3) spielfeldNeu[x][y] = true;
-                    }
+                    }*/
                 }
             }
-            System.out.println(i);
-
             spielfeld = spielfeldNeu;
             beiAenderung.aktualisiere(spielfeld);
-            if(wiederholung) System.out.println("unveraendert");;
-            if (Arrays.deepEquals(spielfeld, spielfeldNeu)){
-                wiederholung = true;
-            }
         }
     }
 

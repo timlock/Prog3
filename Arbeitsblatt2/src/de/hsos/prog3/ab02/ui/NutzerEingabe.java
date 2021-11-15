@@ -33,7 +33,7 @@ public class NutzerEingabe {
 
             System.out.print("Anzahl durchzufuehrender Simulationsschritte \n(Maximal 5 | Abbruch bei negativer Zahl=:");
             simulationsSchritte = io.leseInteger();
-        }while (simulationsSchritte > 5);
+        }while (simulationsSchritte > 15);
         return simulationsSchritte;
     }
 }
