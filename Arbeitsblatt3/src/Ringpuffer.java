@@ -1,5 +1,12 @@
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
+
+@FunctionalInterface
+interface CollectionLambda<T> {
+    boolean execute(Collection<T> collection);
+}
 
 public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
     private ArrayList<T> elements;
@@ -7,11 +14,16 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
     private int readPos = 0;
     private int size = 0;
     private int capacity;
-    private boolean fixedCapacity;
+    private boolean fixedCapacity = true;
     private boolean discarding = false;
 
-    public Ringpuffer(int capacity) {
+    public Ringpuffer(){
+        elements = new ArrayList<T>();
+    }
+    public Ringpuffer(int capacity,boolean fixedCapacity, boolean discarding) {
         this.capacity = capacity;
+        this.fixedCapacity = fixedCapacity;
+        this.discarding = discarding;
         elements = new ArrayList<T>();
     }
 
@@ -23,6 +35,11 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
     public int writeIncrement() {
         writePos = (writePos + 1) % capacity;
         return writePos;
+    }
+    public void fillUp(int requiredSpace){
+        for(int i = 0; i < requiredSpace; i++){
+            elements.add(writePos + i, null);
+        }
     }
 
     @Override
@@ -72,11 +89,20 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] objArray = new Object[size];
+        for (int i = 0; i < capacity; i++) {
+            objArray[i] = (Object) elements.get((readPos +  i) % capacity);
+        }
+        return objArray;
     }
 
     @Override
     public <T1> T1[] toArray(T1[] a) {
+        if(a.length < size) a = (T1[]) Array.newInstance(a.getClass(),size);
+        //"new T1[]" nicht möglich, da T1 zur Kompelierzeit object ist (unbound) und a erst zur laufzeit Typfest ist
+        for (int i = 0; i < capacity; i++) {
+            a[i] = (T1) elements.get((readPos +  i) % capacity);
+        }
         return null;
     }
 
@@ -120,9 +146,10 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
                     }
 
                     case 3: {
-                        System.out.println("Bitte neue Kapazität angeben");
-                        int capacity = eingabe.nextInt();
-                        this.capacity = capacity;
+                        System.out.println("Bitte die Anzahl neuer zusätzlicher Speicherstellen angeben");
+                        int newCapacity = eingabe.nextInt();
+                        capacity += newCapacity;
+                        fillUp(newCapacity);
                         add(t);
                     }
                     break;
@@ -140,31 +167,57 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        if(!elements.contains(o)) return false;
+        elements.remove(o);
+        size--;
+        fillUp(1);
+        return true;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+       return elements.containsAll(c);
     }
 
     @Override
     public boolean addAll(Collection<? extends T> c) {
-        return false;
+        if(c.isEmpty()) return false;
+        int altered = 0;
+        for (T i:
+             c) {
+            if(add(i)) altered++;
+        }
+        if(altered == 0) return false;
+        return true;
+    }
+
+    public boolean removeElements(CollectionLambda function, Collection<?> c){
+        if(c.isEmpty()) return false;
+        int oldSize = size;
+        function.execute(c);
+        fillUp(c.size());
+        size = size - c.size();
+        if(oldSize > size) return false;
+        return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        CollectionLambda<T> retain = ((a)-> elements.retainAll(a));
+        return removeElements(retain,c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        CollectionLambda<T> remove = ((a)-> elements.removeAll(a));
+        return removeElements(remove,c);
     }
 
     @Override
     public void clear() {
+        for(int i = 0; i < capacity; i++){
+            elements.set(i, null);
+        }
 
     }
 
