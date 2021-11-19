@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
@@ -13,12 +14,15 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
     private int writePos = 0;
     private int readPos = 0;
     private int size = 0;
-    private int capacity;
+    private int capacity = 10;
     private boolean fixedCapacity = true;
     private boolean discarding = false;
 
     public Ringpuffer(){
         elements = new ArrayList<T>();
+    }
+    public Ringpuffer(int capacity){
+        this.capacity = capacity;
     }
     public Ringpuffer(int capacity,boolean fixedCapacity, boolean discarding) {
         this.capacity = capacity;
@@ -99,7 +103,6 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
     @Override
     public <T1> T1[] toArray(T1[] a) {
         if(a.length < size) a = (T1[]) Array.newInstance(a.getClass(),size);
-        //"new T1[]" nicht möglich, da T1 zur Kompelierzeit object ist (unbound) und a erst zur laufzeit Typfest ist
         for (int i = 0; i < capacity; i++) {
             a[i] = (T1) elements.get((readPos +  i) % capacity);
         }
@@ -203,13 +206,13 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        CollectionLambda<T> retain = ((a)-> elements.retainAll(a));
+        CollectionLambda<T> retain = ((a)-> elements.removeAll(a));
         return removeElements(retain,c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        CollectionLambda<T> remove = ((a)-> elements.removeAll(a));
+        CollectionLambda<T> remove = ((a)-> elements.retainAll(a));
         return removeElements(remove,c);
     }
 
@@ -223,26 +226,42 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
 
     @Override
     public boolean offer(T t) {
-        return false;
+        if(size == capacity) return false;
+        add(t);
+        return true;
     }
 
     @Override
-    public T remove() {
-        return null;
+    public T remove() throws NoSuchElementException{
+        if(size == 0) throw new NoSuchElementException("Es existiert kein weiteres Element");
+        if(readPos == writePos) throw new NoSuchElementException("Der Puffer ist leer");
+//        T output = elements.get(readPos);
+        readIncrement();
+        return elements.get((readPos-1) % capacity);
     }
 
     @Override
     public T poll() {
-        return null;
+        return remove();
     }
 
     @Override
     public T element() {
-        return null;
+        if(size == 0) throw new NoSuchElementException("Es existiert kein weiteres Element");
+        return elements.get(readPos);
     }
 
     @Override
     public T peek() {
-        return null;
+        if(size == 0) return null;
+        return elements.get(readPos);
+    }
+
+    @Override
+    public String toString(){
+        Iterator iterator = iterator();
+        while(iterator.hasNext()){
+            System.out.print("");
+        }
     }
 }
