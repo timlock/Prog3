@@ -312,17 +312,14 @@ public class Ringpuffer<T> implements Queue<T>, Serializable, Cloneable {
 Führen Sie eine Literaturrecherche durch, ob zur Umsetzung des generischen Ringpuffers
         anstelle von ArrayList<T> zur Verwaltung der Elemente nicht besser ein generisches Array
         verwendet werden sollte.
-
       Ein parametrisierter Array ist nicht Typsicher, da ein Array erst zur Laufzeit den Array Store-check, durchführt,
       generische Typen jedoch zur Laufzeit wegen der Type Erasure gar nicht sichtbar sind für den Array.
       Beim anschließenden ausführen und Zugriffs auf eine Stelle im Array, würde es zu einer ClassCastException kommen,
       da versucht wird Integer vom Typ Object nach String zu casten.
-
       Beispiel:
         Object[] objects = new String[10];
         objects[0] = new Integer(1);
       Würde während der Compiler Zeit zur ArrayStoreException führen
-
         Object[] objects = new Instance<String>[10];
         objects[0] = new Instance<Integer>(1);
        Nach Type Erasur:
@@ -330,6 +327,3 @@ Führen Sie eine Literaturrecherche durch, ob zur Umsetzung des generischen Ring
         objects[0] = new Instance<>(1);
     Würde nicht zu einer ArrayStoreException führen
 */
-
-
-
