@@ -8,7 +8,7 @@ public class Spielfeld {
     private int margin = 20;
     private int breite = 100;
     public Spielfeld(){
-        spiellaeche = new Quadrat(margin ,margin ,margin + 700,margin + 800);
+        spiellaeche = new Quadrat(margin ,margin ,500 - margin,1000 - margin);
 
     }
     public void darstellen(Interaktionsbrett ib){
@@ -16,6 +16,14 @@ public class Spielfeld {
         ib.neuesRechteck(spiellaeche.links(),spiellaeche.oben(),spiellaeche.breite(),spiellaeche.hoehe());
         ib.neueLinie(spiellaeche.mitteInX(),spiellaeche.oben(),spiellaeche.mitteInX(), spiellaeche.unten());
 
+
     }
 
+    public int getMargin() {
+        return margin;
+    }
+
+    public Quadrat getSpiellaeche() {
+        return spiellaeche;
+    }
 }
