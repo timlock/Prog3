@@ -7,6 +7,9 @@ public class PongSpiel {
     private Spieler spielerRechts;
     private Spielfeld spielfeld;
     private Interaktionsbrett ib;
+    private String zustand;
+    private String eingaeLinks;
+    private String eingaeRechts;
     private final int FPMS = 17;
 
     public PongSpiel(){
@@ -16,8 +19,9 @@ public class PongSpiel {
     }
     private void startAufstellung(){
         spielfeld = new Spielfeld();
-        spielerLinks = new Spieler(spielfeld, spielfeld.getSpiellaeche().mitteInY(), spielfeld.getMargin() + spielfeld.getSpiellaeche().links());
-        spielerRechts = new Spieler(spielfeld, spielfeld.getSpiellaeche().mitteInY(), spielfeld.getMargin() - spielfeld.getSpiellaeche().rechts());
+        Quadrat quadratFeld = spielfeld.getSpiellaeche();
+        spielerLinks = new Spieler(spielfeld, quadratFeld.links() + spielfeld.getMargin() , quadratFeld.mitteInY());
+        spielerRechts = new Spieler(spielfeld, quadratFeld.rechts() - (spielfeld.getMargin() + spielerLinks.getSchlaeger().breite()), quadratFeld.mitteInY());
     }
 
     public void spielen() throws InterruptedException {
@@ -26,6 +30,8 @@ public class PongSpiel {
         while (true){
             start = System.currentTimeMillis();
             ib.abwischen();
+            resetEingabe();
+            System.out.println(eingaeLinks);
             spielfeld.darstellen(ib);
             zeichneSpieler(spielerLinks);
             zeichneSpieler(spielerRechts);
@@ -37,7 +43,10 @@ public class PongSpiel {
     public void zeichneSpieler(Spieler spieler){
         ib.neuesRechteck(spieler.getSchlaeger().links(),spieler.getSchlaeger().oben(),spieler.getSchlaeger().breite(),spieler.getSchlaeger().hoehe());
     }
-
+    private void resetEingabe(){
+        eingaeLinks = "";
+        eingaeRechts = "";
+    }
 
 
     public void tasteGedrueckt(String s) throws InterruptedException {
@@ -46,7 +55,7 @@ public class PongSpiel {
         if(s.equals("y")) spielerLinks.abwaerts();
         if(s.equals("Oben")) spielerRechts.abwaerts();
         if(s.equals("Unten")) spielerRechts.abwaerts();
-        if(s.equals("s"))spielen();
+       if(s.equals("s"))spielen();
         if(s.equals("e")) System.exit(0);
     }
 
