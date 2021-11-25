@@ -9,9 +9,9 @@ public class SpielerTest {
     public static void main(String[] args) {
         Spielfeld spielfeld = new Spielfeld();
         Interaktionsbrett ib = new Interaktionsbrett();
-        Spieler spielerLinks = new Spieler(spielfeld,spielfeld.getSpiellaeche().links() + spielfeld.getMargin() , spielfeld.getSpiellaeche().mitteInY());
-        Spieler spielerRechts = new Spieler(spielfeld, spielfeld.getSpiellaeche().rechts() - (spielfeld.getMargin() + spielerLinks.getSchlaeger().breite()), spielfeld.getSpiellaeche().mitteInY());
-        Quadrat spiellaeche = spielfeld.getSpiellaeche();
+        Spieler spielerLinks = new Spieler(spielfeld,spielfeld.getSpielflaeche().links() + spielfeld.getMargin() , spielfeld.getSpielflaeche().mitteInY());
+        Spieler spielerRechts = new Spieler(spielfeld, spielfeld.getSpielflaeche().rechts() - (spielfeld.getMargin() + spielerLinks.getSchlaeger().breite()), spielfeld.getSpielflaeche().mitteInY());
+        Quadrat spiellaeche = spielfeld.getSpielflaeche();
         ib.neuesRechteck(spiellaeche.links(),spiellaeche.oben(),spiellaeche.breite(),spiellaeche.hoehe());
         ib.neueLinie(spiellaeche.mitteInX(),spiellaeche.oben(),spiellaeche.mitteInX(), spiellaeche.unten());
         zeichneSpieler(ib,spielerLinks);

@@ -6,10 +6,11 @@ public class PongSpiel {
     private Spieler spielerLinks;
     private Spieler spielerRechts;
     private Spielfeld spielfeld;
+    private Ball ball;
     private Interaktionsbrett ib;
-    private String zustand;
-    private String eingaeLinks;
-    private String eingaeRechts;
+    private KollisionsDetektor detektor;
+    private String punkte = "0 : 0";
+    private boolean zustand = false;
     private final int FPMS = 17;
 
     public PongSpiel(){
@@ -19,23 +20,27 @@ public class PongSpiel {
     }
     private void startAufstellung(){
         spielfeld = new Spielfeld();
-        Quadrat quadratFeld = spielfeld.getSpiellaeche();
+        Quadrat quadratFeld = spielfeld.getSpielflaeche();
         spielerLinks = new Spieler(spielfeld, quadratFeld.links() + spielfeld.getMargin() , quadratFeld.mitteInY());
         spielerRechts = new Spieler(spielfeld, quadratFeld.rechts() - (spielfeld.getMargin() + spielerLinks.getSchlaeger().breite()), quadratFeld.mitteInY());
+        ball = new Ball(quadratFeld.links() + quadratFeld.mitteInX() /5 , quadratFeld.mitteInY(), quadratFeld.breite() /100, 4,1);
+        detektor = new KollisionsDetektor()
     }
 
     public void spielen() throws InterruptedException {
         long start;
-        long differenz;
+        long differenz = 17;
+       // while(!zustand){}
         while (true){
             start = System.currentTimeMillis();
             ib.abwischen();
-            resetEingabe();
-            System.out.println(eingaeLinks);
             spielfeld.darstellen(ib);
+            ib.neuerText(spielfeld.getSpielflaeche().mitteInX(), 10, punkte);
             zeichneSpieler(spielerLinks);
             zeichneSpieler(spielerRechts);
-            differenz = System.currentTimeMillis() - start;
+            ball.darstellen(ib);
+            ball.bewegen((int)differenz / FPMS);
+            differenz = (System.currentTimeMillis() - start);
             if(differenz < FPMS)Thread.sleep(FPMS-differenz);
         }
     }
@@ -43,19 +48,15 @@ public class PongSpiel {
     public void zeichneSpieler(Spieler spieler){
         ib.neuesRechteck(spieler.getSchlaeger().links(),spieler.getSchlaeger().oben(),spieler.getSchlaeger().breite(),spieler.getSchlaeger().hoehe());
     }
-    private void resetEingabe(){
-        eingaeLinks = "";
-        eingaeRechts = "";
-    }
 
 
     public void tasteGedrueckt(String s) throws InterruptedException {
-        System.out.println(s);
+       // System.out.println(s);
         if(s.equals("a")) spielerLinks.aufwaerts();
         if(s.equals("y")) spielerLinks.abwaerts();
-        if(s.equals("Oben")) spielerRechts.abwaerts();
+        if(s.equals("Oben")) spielerRechts.aufwaerts();
         if(s.equals("Unten")) spielerRechts.abwaerts();
-       if(s.equals("s"))spielen();
+       if(s.equals("s")) zustand = true;
         if(s.equals("e")) System.exit(0);
     }
 

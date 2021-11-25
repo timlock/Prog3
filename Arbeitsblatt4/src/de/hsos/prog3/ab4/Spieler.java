@@ -3,13 +3,14 @@ package de.hsos.prog3.ab4;
 public class Spieler {
     private Spielfeld spielfeld;
     private Quadrat schlaeger;
+    private int geschwindigkeit;
     private int punkte;
 
 
     public Spieler(Spielfeld spielfeld, int x, int y){
         this.spielfeld = spielfeld;
-        schlaeger = new Quadrat(x,y,spielfeld.getSpiellaeche().hoehe() / 10, spielfeld.getSpiellaeche().breite()/100);
-
+        schlaeger = new Quadrat(x,y,spielfeld.getSpielflaeche().hoehe() / 10, spielfeld.getSpielflaeche().breite()/100);
+        geschwindigkeit = schlaeger.hoehe()/5;
     }
 
     public Quadrat getSchlaeger() {
@@ -25,12 +26,12 @@ public class Spieler {
     }
 
     public void aufwaerts() {
-        if(schlaeger.oben() + 5 >= spielfeld.getSpiellaeche().oben()) return;
-        schlaeger.verschiebe(0,2);
+        if(schlaeger.oben() - 5 <= spielfeld.getSpielflaeche().oben()) return;
+        schlaeger.verschiebe(0,-geschwindigkeit);
     }
     public void abwaerts(){
-       if(schlaeger.unten() + 5 >= spielfeld.getSpiellaeche().unten()) return;
-        schlaeger.verschiebe(0,-2);
+       if(schlaeger.unten() + 5 >= spielfeld.getSpielflaeche().unten()) return;
+        schlaeger.verschiebe(0,geschwindigkeit);
     }
 
 }
