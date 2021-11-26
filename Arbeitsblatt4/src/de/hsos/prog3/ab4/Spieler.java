@@ -9,8 +9,8 @@ public class Spieler {
 
     public Spieler(Spielfeld spielfeld, int x, int y){
         this.spielfeld = spielfeld;
-        schlaeger = new Quadrat(x,y,spielfeld.getSpielflaeche().hoehe() / 10, spielfeld.getSpielflaeche().breite()/100);
-        geschwindigkeit = schlaeger.hoehe()/2;
+        schlaeger = new Quadrat(x,y,spielfeld.getSpielflaeche().hoehe() / 6, spielfeld.getSpielflaeche().breite()/100);
+        geschwindigkeit = schlaeger.hoehe()/4;
     }
 
     public Quadrat getSchlaeger() {

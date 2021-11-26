@@ -23,7 +23,7 @@ public class KollisionsDetektor {
     }
 
     public void checkBeruehrungBallMitSchlaeger(Ball ball) {
-        if(ball.getForm().ueberschneidet(spielerLinks.getSchlaeger())
+        if (ball.getForm().ueberschneidet(spielerLinks.getSchlaeger())
                 || ball.getForm().ueberschneidet(spielerRechts.getSchlaeger())) {
             double random = Math.random();
             if (random > 0.5)
@@ -36,6 +36,10 @@ public class KollisionsDetektor {
     }
 
     public BallPosition checkAusserhalbDesSpielfeldes(Ball ball) {
+        if (ball.getForm().links() <= spielfeld.getSpielflaeche().links())
+            return BallPosition.DRAUSSEN_LINKS;
+        if (ball.getForm().rechts() >= spielfeld.getSpielflaeche().rechts())
+            return BallPosition.DRAUSSEN_RECHTS;
         return BallPosition.DRINNEN;
     }
 }

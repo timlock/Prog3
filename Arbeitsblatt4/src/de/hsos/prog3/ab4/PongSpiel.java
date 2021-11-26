@@ -23,7 +23,7 @@ public class PongSpiel {
         Quadrat quadratFeld = spielfeld.getSpielflaeche();
         spielerLinks = new Spieler(spielfeld, quadratFeld.links() + spielfeld.getMargin() , quadratFeld.mitteInY());
         spielerRechts = new Spieler(spielfeld, quadratFeld.rechts() - (spielfeld.getMargin() + spielerLinks.getSchlaeger().breite()), quadratFeld.mitteInY());
-        ball = new Ball(quadratFeld.links() + quadratFeld.mitteInX() /5 , 400 /*quadratFeld.mitteInY()*/, quadratFeld.breite() /100, 4,-1);
+        ball = new Ball(quadratFeld.links() + quadratFeld.mitteInX()*2 /3, 400 , quadratFeld.breite() /100, -4,-1,spielfeld.getSpielflaeche().breite());
         detektor = new KollisionsDetektor(spielfeld,spielerLinks, spielerRechts);
     }
 
@@ -35,16 +35,22 @@ public class PongSpiel {
             start = System.currentTimeMillis();
             ib.abwischen();
             spielfeld.darstellen(ib);
-            ib.neuerText(spielfeld.getSpielflaeche().mitteInX(), 10, punkte);
+            ib.neuerText(spielfeld.getSpielflaeche().mitteInX() - 14, 10, punkte);
             zeichneSpieler(spielerLinks);
             zeichneSpieler(spielerRechts);
             ball.darstellen(ib);
             detektor.checkBeruehrungBallSpielfeldGrenzen(ball);
             detektor.checkBeruehrungBallMitSchlaeger(ball);
             switch (detektor.checkAusserhalbDesSpielfeldes(ball)){
-                case DRAUSSEN_LINKS: erhoehePunkte(true);
+                case DRAUSSEN_LINKS: {
+                    erhoehePunkte(false);
+                    ball.aufschlag(true);
+                }
                 break;
-                case DRAUSSEN_RECHTS: erhoehePunkte(false);
+                case DRAUSSEN_RECHTS: {
+                    erhoehePunkte(true);
+                    ball.aufschlag(false);
+                }
                 break;
             }
             ball.bewegen((int)differenz / FPMS);
@@ -68,17 +74,17 @@ public class PongSpiel {
         if(s.equals("e")) System.exit(0);
     }
 
-    public void erhoehePunkte(boolean punkt){
-        if(punkt) {
+    public void erhoehePunkte(boolean links){
+        if(links) {
             spielerLinks.setPunkte(spielerLinks.getPunkte() + 1);
             StringBuilder builder = new StringBuilder(punkte);
-            builder.setCharAt(1,(char)spielerLinks.getPunkte());
+            builder.setCharAt(0,spielerLinks.getPunkte());
             punkte = builder.toString();
         }
         else{
             spielerRechts.setPunkte(spielerLinks.getPunkte()+1);
             StringBuilder builder = new StringBuilder(punkte);
-            builder.setCharAt(1,(char)spielerRechts.getPunkte());
+            builder.setCharAt(punkte.length()-1,(char)spielerRechts.getPunkte());
             punkte = builder.toString();
         }
     }
