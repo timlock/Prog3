@@ -17,14 +17,22 @@ public class KollisionsDetektor {
     }
 
     public void checkBeruehrungBallSpielfeldGrenzen(Ball ball) {
-        ball.umkehrenDerBewegungInY();
+        if (ball.getForm().oben() - 5 <= spielfeld.getSpielflaeche().oben()
+                || ball.getForm().unten() + 5 >= spielfeld.getSpielflaeche().unten())
+            ball.umkehrenDerBewegungInY();
     }
 
     public void checkBeruehrungBallMitSchlaeger(Ball ball) {
-        ball.umkehrenDerBewegungInY();
-
-        ball.umkehrenDerBewegungInY();
-        ball.umkehrenDerBewegungInX();
+        if(ball.getForm().ueberschneidet(spielerLinks.getSchlaeger())
+                || ball.getForm().ueberschneidet(spielerRechts.getSchlaeger())) {
+            double random = Math.random();
+            if (random > 0.5)
+                ball.umkehrenDerBewegungInX();
+            else {
+                ball.umkehrenDerBewegungInY();
+                ball.umkehrenDerBewegungInX();
+            }
+        }
     }
 
     public BallPosition checkAusserhalbDesSpielfeldes(Ball ball) {

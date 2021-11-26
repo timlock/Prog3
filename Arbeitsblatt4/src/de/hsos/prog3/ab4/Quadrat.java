@@ -65,12 +65,12 @@ public class Quadrat {
         this.y = y;
     }
     public boolean ueberschneidet(Quadrat o){
-        if (this.oben() < o.unten()
-                || this.unten() > o.oben()) {
+        if (this.oben() -5 > o.unten()
+                || this.unten() + 5 < o.oben()) {
             return false;
         }
-        if (this.rechts() < o.links()
-                || this.links() > o.rechts()) {
+        if (this.rechts() + 5 < o.links()
+                || this.links() -5  > o.rechts()) {
             return false;
         }
         return true;
