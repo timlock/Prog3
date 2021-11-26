@@ -37,6 +37,15 @@ public class Ball {
         bewegungInXProFrame *= -1;
 
     }
+
+    public int getBewegungInXProFrame() {
+        return bewegungInXProFrame;
+    }
+
+    public int getBewegungInYProFrame() {
+        return bewegungInYProFrame;
+    }
+
     public void umkehrenDerBewegungInY(){
         bewegungInYProFrame *= -1;
     }
