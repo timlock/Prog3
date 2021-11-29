@@ -2,6 +2,8 @@ package de.hsos.prog3.ab4;
 
 import de.hsos.prog3.ab4.pong.util.Interaktionsbrett;
 
+import java.awt.desktop.SystemEventListener;
+
 public class PongSpiel {
     private Spieler spielerLinks;
     private Spieler spielerRechts;
@@ -56,6 +58,7 @@ public class PongSpiel {
             ball.bewegen((int)differenz / FPMS);
             differenz = (System.currentTimeMillis() - start);
             if(differenz < FPMS)Thread.sleep(FPMS-differenz);
+            if(spielerLinks.getPunkte() == 15 || spielerRechts.getPunkte() == 15) System.exit(0);
         }
     }
 
@@ -77,16 +80,11 @@ public class PongSpiel {
     public void erhoehePunkte(boolean links){
         if(links) {
             spielerLinks.setPunkte(spielerLinks.getPunkte() + 1);
-            StringBuilder builder = new StringBuilder(punkte);
-            builder.setCharAt(0,spielerLinks.getPunkte());
-            punkte = builder.toString();
         }
         else{
             spielerRechts.setPunkte(spielerLinks.getPunkte()+1);
-            StringBuilder builder = new StringBuilder(punkte);
-            builder.setCharAt(punkte.length()-1,(char)spielerRechts.getPunkte());
-            punkte = builder.toString();
         }
+        punkte = spielerLinks.getPunkte() + "  :  " + spielerRechts.getPunkte();
     }
 
     public void setzePunkteZurueck(){

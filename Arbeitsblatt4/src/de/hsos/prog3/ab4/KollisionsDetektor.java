@@ -23,8 +23,8 @@ public class KollisionsDetektor {
     }
 
     public void checkBeruehrungBallMitSchlaeger(Ball ball) {
-        if (ball.getForm().ueberschneidet(spielerLinks.getSchlaeger())
-                || ball.getForm().ueberschneidet(spielerRechts.getSchlaeger())) {
+        if (ball.getForm().ueberschneidet(spielerLinks.getSchlaeger()) && ball.getBewegungInXProFrame() < 0
+                || ball.getForm().ueberschneidet(spielerRechts.getSchlaeger()) && ball.getBewegungInXProFrame() > 0) {
             double random = Math.random();
             if (random > 0.5)
                 ball.umkehrenDerBewegungInX();
