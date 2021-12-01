@@ -6,9 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
+import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,8 +22,19 @@ public class MainActivity extends AppCompatActivity {
     private Paint paint;
     private int breite = 800;
     private int hoehe = 800;
+
     private final int textsize = 50;
     private Timer timer = new Timer();
+
+    private int grenzeLinks = 30;
+    private int grenzeRechts = 770;
+    private int grenzeOben = 400;
+    private int grenzeUnten = 770;
+    private int ballRadius = 20;
+    private float ballX = 100f;
+    private float ballY = 700f;
+    private float velociteX = 0.3f;
+    private float velociteY = 4.5f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +86,21 @@ public class MainActivity extends AppCompatActivity {
         this.canvas.drawLine(breite / 2 - 30, hoehe / 2 + 20, breite / 2 + 30, hoehe / 2 + 20, this.paint);
     }
 
-    private void derSpringendePunkt() {
-
+    public void derSpringendePunkt() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            Log.i("MainActivity", LocalDateTime.now()
+//                    + ": der springende Punkt");
+//        }
+        this.paint.setColor(Color.BLUE);
+        this.canvas.drawCircle(this.ballX, this.ballY, this.ballRadius, this.paint);
+        this.ballX += this.velociteX;
+        this.ballY += this.velociteY;
+        if(this.ballX <= this.grenzeLinks || this.ballX >= this.grenzeRechts) this.velociteX *= -1;
+        if(this.ballY <= this.grenzeOben || this.ballY >= this.grenzeUnten) this.velociteY *= -1;
+        this.paint.setColor(Color.RED);
+        this.canvas.drawCircle(this.ballX, this.ballY, this.ballRadius, this.paint);
+        this.imageView.invalidate();
 
     }
+
 }
