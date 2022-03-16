@@ -8,6 +8,38 @@
     android:visibility="visible"
     tools:context=".ui.MainActivity">
 
+    <LinearLayout
+        android:id="@+id/Gamebar"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/Minefield"
+        app:layout_constraintEnd_toEndOf="@+id/Minefield"
+        app:layout_constraintStart_toStartOf="@+id/Minefield"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <Button
+            android:id="@+id/flagButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="changeFlagMode"
+            android:text="@string/flag" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="reset"
+            android:text="@string/reset" />
+            app:srcCompat="@drawable/ic_launcher_foreground"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+
+    </LinearLayout>
+
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/Minefield"
         android:layout_width="wrap_content"
@@ -42,10 +74,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/Minefield"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

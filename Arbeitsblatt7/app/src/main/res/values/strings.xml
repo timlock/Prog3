@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Score Card</string>
+    <string name="name">Name</string>
+    <string name="course_name">Swin golf course</string>
+    <string name="hole_count">Number of holes</string>
+    <string name="count">Count</string>
+    <string name="golfers">Golfers</string>
+    <string name="golfer_name">Golfers name</string>
+    <string name="golfer_delete">Delete golfer</string>
+    <string name="next">next</string>
+    <string name="error_start">The entries for</string>
+    <string name="at_least_one">at least one</string>
+    <string name="error_end">are missing.</string>
+    <string name="player">Player</string>
+    <string name="hole">Loch</string>
+    <string name="results">Fertig</string>
+    <string name="wrongInput1">"Fehlerhafte Eingabe für Spieler: "</string>
+    <string name="wrongInput2">" Loch: "</string>
+
+</resources>

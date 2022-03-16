@@ -1,7 +1,5 @@
 package com.example.arbeitsblatt6.logik;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class Map {
@@ -11,12 +9,12 @@ public class Map {
     public Map(int column, int row, int bombs) {
         this.column = column;
         this.row = row;
-        initializeMap(bombs);
+        placeBombs(bombs);
         setMarkers();
         groupFields();
     }
 
-    private void initializeMap(int bombs) {
+    private void placeBombs(int bombs) {
         internMap = new Field[column * row];
         int placedBombs = 0;
         while (placedBombs < bombs) {
@@ -117,8 +115,8 @@ public class Map {
 
     public int checkForBomb(int y, int x) {
         if (internMap[y * row + x].getValue() == 0) return 0;
-        if (internMap[y * row + x].getValue() == 9) return 2;
-        return 1;
+        if (internMap[y * row + x].getValue() == 9) return 1;
+        return 2;
     }
 
     public String print() {

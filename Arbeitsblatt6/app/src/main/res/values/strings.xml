@@ -2,5 +2,10 @@
     <string name="app_name">Mineswheeper</string>
     <string name="flag">🚩</string>
     <string name="bomb">💣</string>
+    <string name="time">000</string>
+    <string name="remainingBombs">10</string>
+    <string name="reset">🙂</string>
+    <string name="gameOver">😭</string>
+    <string name="victory">😎</string>
 
 </resources>
